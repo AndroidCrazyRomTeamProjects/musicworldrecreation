@@ -1,0 +1,15 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.MusicworldRecreation" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:windowFullscreen">true</item>
+
+    </style>
+
+    <style name="Theme.MusicworldRecreation.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.MusicworldRecreation.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark" />
+    <style name="Theme.MusicworldRecreation.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+</resources>
