@@ -19,6 +19,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
     private GameThread mGameThread;
     Paint mPaint = new Paint();
     Bitmap tuney = BitmapFactory.decodeResource(getResources(),R.drawable.tuney_basic);
+    public int possition = 1;
 
     public GameSurfaceView(Context context) {
         super(context);
@@ -49,14 +50,13 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
             holder.unlockCanvasAndPost(mCanvas);
         }
     }
-    int i;
 
     public void drawTuney(Canvas canvas) {
         super.draw(canvas);
         mPaint.setColor(WHITE);
-        i-=6;
-        canvas.drawCircle(1080 ,2110 +i, 95, mPaint);
-        canvas.drawBitmap(tuney, 1015, 2035 + i, null);
+        possition-=6;
+        canvas.drawCircle(1080 ,2110 + possition, 95, mPaint);
+        canvas.drawBitmap(tuney, 1015, 2035 + possition, null);
     }
 
     @Override

@@ -13,13 +13,14 @@ import kotlinx.android.synthetic.main.activity_title.*
 
 
 class TitleActivity : AppCompatActivity() {
+    var titlesound = null as MediaPlayer?
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_title)
         val animatedBackroundImage = (title_view.background as AnimationDrawable)
         animatedBackroundImage.start()
-        val titlesound = MediaPlayer.create(this.applicationContext ,R.raw.title_screen)
-        titlesound.start()
+        titlesound = MediaPlayer.create(this.applicationContext ,R.raw.title_screen)
+        titlesound?.start()
         window.decorView.apply {
             systemUiVisibility =
                 View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_FULLSCREEN
@@ -36,7 +37,7 @@ class TitleActivity : AppCompatActivity() {
     }
 
     fun TitleClicked(view: View) {
-        //titlesound.stop()
+        titlesound?.stop()
         val gameactivity = Intent(this, GameActivity::class.java)
         startActivity(gameactivity)
     }
