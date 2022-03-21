@@ -10,10 +10,7 @@ public class GameThread extends Thread implements View.OnTouchListener {
     private final float TOUCH_SCALE_FACTOR = 180.0f / 320;
     private float previousX;
     private float previousY;
-    private Canvas canvas;
-    public int targetposition = -293;
-    View v;
-    MotionEvent event;
+    public int targetposition = -497;
 
 
     public GameThread(GameSurfaceView mGameSurfaceView) {
