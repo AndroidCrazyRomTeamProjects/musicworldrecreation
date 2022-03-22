@@ -26,7 +26,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
     Bitmap tuneydead = BitmapFactory.decodeResource(getResources(), R.drawable.tuney_dead);
     public int possition = 1;
     public int animstate = 1;
-    Bitmap targetpositionanim;
+    int targetpossitionanimframe;
 
     public GameSurfaceView(Context context) {
         super(context);
@@ -63,30 +63,31 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
         super.draw(canvas);
         switch (animstate) {
             case 1:
-                targetpositionanim = BitmapFactory.decodeResource(getResources(), R.drawable.target_position_anim_1);
+                targetpossitionanimframe = R.drawable.target_position_anim_1;
                 break;
             case 2:
-                targetpositionanim = BitmapFactory.decodeResource(getResources(), R.drawable.target_position_anim_2);
+                targetpossitionanimframe = R.drawable.target_position_anim_2;
                 break;
             case 3:
-                targetpositionanim = BitmapFactory.decodeResource(getResources(), R.drawable.target_position_anim_3);
+                targetpossitionanimframe = R.drawable.target_position_anim_3;
                 break;
             case 4:
-                targetpositionanim = BitmapFactory.decodeResource(getResources(), R.drawable.target_position_anim_4);
+                targetpossitionanimframe = R.drawable.target_position_anim_4;
                 break;
             case 5:
-                targetpositionanim = BitmapFactory.decodeResource(getResources(), R.drawable.target_position_anim_5);
+                targetpossitionanimframe = R.drawable.target_position_anim_5;
                 break;
             case 6:
-                targetpositionanim = BitmapFactory.decodeResource(getResources(), R.drawable.target_position_anim_6);
+                targetpossitionanimframe = R.drawable.target_position_anim_6;
                 break;
             case 7:
-                targetpositionanim = BitmapFactory.decodeResource(getResources(), R.drawable.target_position_anim_7);
+                targetpossitionanimframe = R.drawable.target_position_anim_7;
                 break;
             case 8:
-                targetpositionanim = BitmapFactory.decodeResource(getResources(), R.drawable.target_position_anim_8);
+                targetpossitionanimframe = R.drawable.target_position_anim_8;
                 break;
         }
+        Bitmap targetpositionanim = BitmapFactory.decodeResource(getResources(),targetpossitionanimframe);
         canvas.drawBitmap(targetpositionanim, 1015, 2035 + mGameThread.targetposition, targetpaint);
         tuneypaint.setColor(WHITE);
         possition -= 6;
