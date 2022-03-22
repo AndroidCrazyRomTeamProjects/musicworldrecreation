@@ -88,14 +88,15 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
                 break;
         }
         Bitmap targetpositionanim = BitmapFactory.decodeResource(getResources(),targetpossitionanimframe);
-        canvas.drawBitmap(targetpositionanim, 1015, 2035 + mGameThread.targetposition, targetpaint);
+        canvas.drawBitmap(targetpositionanim, 1015, 3035 + mGameThread.targetposition, targetpaint);
+
         tuneypaint.setColor(WHITE);
         possition -= 6;
-        canvas.drawCircle(1080, 2110 + possition, 95, tuneypaint);
-        canvas.drawBitmap(tuney, 1015, 2035 + possition, null);
+        canvas.drawCircle(1080, 3110 + possition, 95, tuneypaint);
+        canvas.drawBitmap(tuney, 1015, 3035 + possition, null);
         if (possition == mGameThread.targetposition) {
             canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
-            canvas.drawBitmap(tuneydead, 1015, 2035 + possition, null);
+            canvas.drawBitmap(tuneydead, 1015, 3035 + possition, null);
         }
     }
 
@@ -114,4 +115,17 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
     public void surfaceDestroyed(@NonNull SurfaceHolder holder) {
 
     }
+    /*@Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            // Check if click is within bounds of your rect
+            if (event.getX() == 3045 + mGameThread.targetposition) {
+                // Clicked within your rect, register further clicks by consuming this click
+                Toast.makeText(getContext(), "test", Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        }
+
+        return super.onTouchEvent(event);
+    }*/
 }

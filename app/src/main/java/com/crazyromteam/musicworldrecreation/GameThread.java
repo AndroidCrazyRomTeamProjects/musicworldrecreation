@@ -4,25 +4,14 @@ import android.graphics.Canvas;
 import android.view.MotionEvent;
 import android.view.View;
 
-public class GameThread extends Thread implements View.OnTouchListener {
+public class GameThread extends Thread {
     public final GameSurfaceView mGameSurfaceView;
     private final String TAG = "GameThread";
-    private final float TOUCH_SCALE_FACTOR = 180.0f / 320;
-    private float previousX;
-    private float previousY;
     public int targetposition = -497;
 
 
     public GameThread(GameSurfaceView mGameSurfaceView) {
         this.mGameSurfaceView = mGameSurfaceView;
-    }
-
-    @Override
-    public boolean onTouch(View v, MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_BUTTON_PRESS) {
-            return true;
-        }
-            return false;
     }
 
     @Override
