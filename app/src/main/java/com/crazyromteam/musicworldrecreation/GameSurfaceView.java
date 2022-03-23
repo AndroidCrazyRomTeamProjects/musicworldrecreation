@@ -2,7 +2,6 @@ package com.crazyromteam.musicworldrecreation;
 
 import static android.graphics.Color.WHITE;
 
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -12,6 +11,8 @@ import android.graphics.Paint;
 import android.graphics.PixelFormat;
 import android.graphics.PorterDuff;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -115,17 +116,20 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
     public void surfaceDestroyed(@NonNull SurfaceHolder holder) {
 
     }
-    /*@Override
+
+    @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            // Check if click is within bounds of your rect
-            if (event.getX() == 3045 + mGameThread.targetposition) {
-                // Clicked within your rect, register further clicks by consuming this click
-                Toast.makeText(getContext(), "test", Toast.LENGTH_SHORT).show();
+            Log.i(TAG, event.getX() + "  " + (event.getY()));
+
+            // Check if click is within bounds of circle
+            if ((event.getX() >= 996 && event.getX() <= 1065) && (event.getY() >= 3055 + mGameThread.targetposition && event.getY() <= 3250 + mGameThread.targetposition)) {
+                // Clicked within circle, register further clicks by consuming this click
+                Log.i(TAG, "success");
                 return true;
             }
         }
 
         return super.onTouchEvent(event);
-    }*/
+    }
 }
