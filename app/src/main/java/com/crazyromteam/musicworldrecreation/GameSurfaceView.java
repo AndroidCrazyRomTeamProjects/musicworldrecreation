@@ -24,10 +24,12 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
     Paint tuneypaint = new Paint();
     Paint targetpaint = new Paint();
     Bitmap tuney = BitmapFactory.decodeResource(getResources(), R.drawable.tuney_basic);
-    Bitmap tuneydead = BitmapFactory.decodeResource(getResources(), R.drawable.tuney_dead);
+    Bitmap tuneydead = BitmapFactory.decodeResource(getResources(), R.drawable.tuney_dead_anim_1);
+    Bitmap tuneycliked = BitmapFactory.decodeResource(getResources(), R.drawable.tuney_tap_anim_1);
     public int possition = 1;
     public int animstate = 1;
     int targetpossitionanimframe;
+    public boolean istuneycliked = false;
 
     public GameSurfaceView(Context context) {
         super(context);
@@ -88,7 +90,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
                 targetpossitionanimframe = R.drawable.target_position_anim_8;
                 break;
         }
-        Bitmap targetpositionanim = BitmapFactory.decodeResource(getResources(),targetpossitionanimframe);
+        Bitmap targetpositionanim = BitmapFactory.decodeResource(getResources(), targetpossitionanimframe);
         canvas.drawBitmap(targetpositionanim, 1015, 3035 + mGameThread.targetposition, targetpaint);
 
         tuneypaint.setColor(WHITE);
@@ -96,8 +98,14 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
         canvas.drawCircle(1080, 3110 + possition, 95, tuneypaint);
         canvas.drawBitmap(tuney, 1015, 3035 + possition, null);
         if (possition == mGameThread.targetposition) {
-            canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
-            canvas.drawBitmap(tuneydead, 1015, 3035 + possition, null);
+            if (istuneycliked) {
+                canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+                canvas.drawBitmap(tuneycliked, 980, 3013 + mGameThread.targetposition, null);
+            }
+            else {
+                canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+                canvas.drawBitmap(tuneydead, 1010, 3035 + possition, null);
+            }
         }
     }
 
@@ -120,12 +128,14 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            Log.i(TAG, event.getX() + "  " + (event.getY()));
+            Log.i(TAG, "touch input: X:" + event.getX() + "  " + "Y:" + (event.getY()));
 
             // Check if click is within bounds of circle
             if ((event.getX() >= 996 && event.getX() <= 1065) && (event.getY() >= 3055 + mGameThread.targetposition && event.getY() <= 3250 + mGameThread.targetposition)) {
                 // Clicked within circle, register further clicks by consuming this click
-                Log.i(TAG, "success");
+                Log.i(TAG, "touch success");
+                istuneycliked = true;
+
                 return true;
             }
         }
