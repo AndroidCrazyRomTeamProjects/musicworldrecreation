@@ -8,6 +8,7 @@
 .externalNativeBuild
 .cxx
 app/build
+app/release
 app/src/test
 app/src/androidtest
 local.properties

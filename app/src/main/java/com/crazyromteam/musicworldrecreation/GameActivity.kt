@@ -1,11 +1,11 @@
 package com.crazyromteam.musicworldrecreation
 
+import android.app.Activity
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.FragmentActivity
 
-class GameActivity : FragmentActivity() {
+class GameActivity : Activity() {
     var gamesound = null as MediaPlayer?
     var mTitleActivity = null as TitleActivity?
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,7 +21,7 @@ class GameActivity : FragmentActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-            gamesound?.stop()
-            mTitleActivity?.titlesound?.start()
+        gamesound?.stop()
+        mTitleActivity?.titlesound?.start()
     }
 }

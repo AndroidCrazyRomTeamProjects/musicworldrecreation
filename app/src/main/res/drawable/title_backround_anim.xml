@@ -1,16 +1,22 @@
-<?xml version="1.0" encoding="utf-8"?>
-<animation-list xmlns:android="http://schemas.android.com/apk/res/android">
- <item
-     android:drawable="@drawable/title_background_1"
-     android:duration="200"
-     />
-    <item
-        android:drawable="@drawable/title_background_2"
-        android:duration="200"
-        />
-    <item
-        android:drawable="@drawable/title_background_3"
-        android:duration="200"
-        />
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="false"
+    android:id="@+id/selected">
 
+    <item android:duration="200">
+        <bitmap
+            android:src="@drawable/title_background_1"
+            android:tileMode="repeat"/>
+    </item>
+
+    <item android:duration="200">
+        <bitmap
+            android:src="@drawable/title_background_2"
+            android:tileMode="repeat"/>
+    </item>
+
+    <item android:duration="200">
+        <bitmap
+            android:src="@drawable/title_background_3"
+            android:tileMode="repeat"/>
+    </item>
 </animation-list>

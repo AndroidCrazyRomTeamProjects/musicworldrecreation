@@ -1,8 +1,5 @@
 package com.crazyromteam.musicworldrecreation;
 
-import android.graphics.Canvas;
-import android.view.MotionEvent;
-import android.view.View;
 
 public class GameThread extends Thread {
     public final GameSurfaceView mGameSurfaceView;
