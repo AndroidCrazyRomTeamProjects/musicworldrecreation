@@ -8,11 +8,11 @@ import android.view.View
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentActivity
 import kotlinx.android.synthetic.main.activity_title.*
 
 
-class TitleActivity : AppCompatActivity() {
+class TitleActivity : FragmentActivity() {
     var titlesound = null as MediaPlayer?
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -3,9 +3,9 @@ package com.crazyromteam.musicworldrecreation
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentActivity
 
-class GameActivity : AppCompatActivity() {
+class GameActivity : FragmentActivity() {
     var gamesound = null as MediaPlayer?
     var mTitleActivity = null as TitleActivity?
     override fun onCreate(savedInstanceState: Bundle?) {
