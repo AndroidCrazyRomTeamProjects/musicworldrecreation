@@ -3,6 +3,7 @@ package com.crazyromteam.musicworldrecreation;
 import static android.graphics.Color.WHITE;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -11,6 +12,7 @@ import android.graphics.Paint;
 import android.graphics.PixelFormat;
 import android.graphics.PorterDuff;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -51,6 +53,13 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
         mGameThread = new GameThread(this);
         setZOrderOnTop(true);
         getHolder().setFormat(PixelFormat.TRANSLUCENT);
+        }
+
+    public static float convertDpToPixel(float dp, Context context) {
+        Resources resources = context.getResources();
+        DisplayMetrics metrics = resources.getDisplayMetrics();
+        float px = dp * ((float) metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT); // You can cache "((float)metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT)" to avoid re-calculation.
+        return px;
     }
 
     public void TryDraw(SurfaceHolder holder) {
@@ -91,20 +100,20 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
                 break;
         }
         Bitmap targetpositionanim = BitmapFactory.decodeResource(getResources(), targetpossitionanimframe);
-        canvas.drawBitmap(targetpositionanim, 1015, 3035 + mGameThread.targetposition, targetpaint);
+        canvas.drawBitmap(targetpositionanim, convertDpToPixel((float) 338.13, getContext()), convertDpToPixel((float) 1011.67 + mGameThread.targetposition, getContext()), targetpaint);
 
         tuneypaint.setColor(WHITE);
         possition -= 6;
-        canvas.drawCircle(1080, 3110 + possition, 95, tuneypaint);
-        canvas.drawBitmap(tuney, 1015, 3035 + possition, null);
+        canvas.drawCircle(convertDpToPixel(360, getContext()), convertDpToPixel((float) 1030.67 + possition, getContext()), convertDpToPixel((float) 29.67, getContext()), tuneypaint);
+        canvas.drawBitmap(tuney, convertDpToPixel(345, getContext()), convertDpToPixel((float) 1011.67 + possition, getContext()), null);
         if (possition == mGameThread.targetposition) {
             if (istuneycliked) {
                 canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
-                canvas.drawBitmap(tuneycliked, 980, 3013 + mGameThread.targetposition, null);
+                canvas.drawBitmap(tuneycliked, convertDpToPixel((float) 326.67, getContext()), convertDpToPixel((float) 1004.33 + mGameThread.targetposition, getContext()), null);
             }
             else {
                 canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
-                canvas.drawBitmap(tuneydead, 1010, 3035 + possition, null);
+                canvas.drawBitmap(tuneydead, convertDpToPixel((float) 326.67, getContext()), convertDpToPixel((float) 1004.33 + mGameThread.targetposition, getContext()), null);
             }
         }
     }
@@ -131,7 +140,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
             Log.i(TAG, "touch input: X:" + event.getX() + "  " + "Y:" + (event.getY()));
 
             // Check if click is within bounds of circle
-            if ((event.getX() >= 996 && event.getX() <= 1065) && (event.getY() >= 3055 + mGameThread.targetposition && event.getY() <= 3250 + mGameThread.targetposition)) {
+            if ((event.getX() >= convertDpToPixel(332, getContext()) && event.getX() <= convertDpToPixel(350, getContext())) && (event.getY() >= convertDpToPixel(1018 + targetpossitionanimframe, getContext()) && event.getY() <= convertDpToPixel(1100 + targetpossitionanimframe, getContext()))) {
                 // Clicked within circle, register further clicks by consuming this click
                 Log.i(TAG, "touch success");
                 istuneycliked = true;

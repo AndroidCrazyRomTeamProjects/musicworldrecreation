@@ -35,10 +35,11 @@ class TitleActivity : Activity() {
             titletext.startAnimation(anim)
         }
 
-        fun TitleClicked(view: View) {
-            titlesound?.stop()
-            val gameactivity = Intent(this, GameActivity::class.java)
-            startActivity(gameactivity)
-        }
+    }
+
+    fun TitleClicked(view: View) {
+        titlesound?.stop()
+        val gameactivity = Intent(this, GameActivity::class.java)
+        startActivity(gameactivity)
     }
 }
