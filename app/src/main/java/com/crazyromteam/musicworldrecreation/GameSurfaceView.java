@@ -21,16 +21,16 @@ import androidx.annotation.NonNull;
 public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callback {
     private GameThread mGameThread;
     private final String TAG = "GameSurfaceView";
-    Paint tuneypaint = new Paint();
-    Paint targetpaint = new Paint();
+    Paint tuneyPaint = new Paint();
+    Paint targetPaint = new Paint();
     Bitmap tuney = BitmapFactory.decodeResource(getResources(), R.drawable.tuney_basic);
-    Bitmap tuneydead = BitmapFactory.decodeResource(getResources(), R.drawable.tuney_dead_anim_1);
-    Bitmap tuneycliked = BitmapFactory.decodeResource(getResources(), R.drawable.tuney_tap_anim_1);
+    Bitmap tuneyDead = BitmapFactory.decodeResource(getResources(), R.drawable.tuney_dead_anim_1);
+    Bitmap tuneyClicked = BitmapFactory.decodeResource(getResources(), R.drawable.tuney_tap_anim_1);
     public Utils mUtils;
-    public int possition = 1;
-    public int animstate = 1;
-    int targetpossitionanimframe;
-    public boolean istuneycliked = false;
+    public int position = 1;
+    public int animState = 1;
+    int targetPositionAnimFrame;
+    public boolean isTuneyClicked = false;
 
     public GameSurfaceView(Context context) {
         super(context);
@@ -67,47 +67,47 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
 
     public void drawTuney(Canvas canvas) {
         super.draw(canvas);
-        switch (animstate) {
+        switch (animState) {
             case 1:
-                targetpossitionanimframe = R.drawable.target_position_anim_1;
+                targetPositionAnimFrame = R.drawable.target_position_anim_1;
                 break;
             case 2:
-                targetpossitionanimframe = R.drawable.target_position_anim_2;
+                targetPositionAnimFrame = R.drawable.target_position_anim_2;
                 break;
             case 3:
-                targetpossitionanimframe = R.drawable.target_position_anim_3;
+                targetPositionAnimFrame = R.drawable.target_position_anim_3;
                 break;
             case 4:
-                targetpossitionanimframe = R.drawable.target_position_anim_4;
+                targetPositionAnimFrame = R.drawable.target_position_anim_4;
                 break;
             case 5:
-                targetpossitionanimframe = R.drawable.target_position_anim_5;
+                targetPositionAnimFrame = R.drawable.target_position_anim_5;
                 break;
             case 6:
-                targetpossitionanimframe = R.drawable.target_position_anim_6;
+                targetPositionAnimFrame = R.drawable.target_position_anim_6;
                 break;
             case 7:
-                targetpossitionanimframe = R.drawable.target_position_anim_7;
+                targetPositionAnimFrame = R.drawable.target_position_anim_7;
                 break;
             case 8:
-                targetpossitionanimframe = R.drawable.target_position_anim_8;
+                targetPositionAnimFrame = R.drawable.target_position_anim_8;
                 break;
         }
-        Bitmap targetpositionanim = BitmapFactory.decodeResource(getResources(), targetpossitionanimframe);
-        canvas.drawBitmap(targetpositionanim, mUtils.convertDpToPixel((float) 338.13, getContext()), mUtils.convertDpToPixel((float) 1011.67 + mGameThread.targetposition, getContext()), targetpaint);
+        Bitmap targetpositionanim = BitmapFactory.decodeResource(getResources(), targetPositionAnimFrame);
+        canvas.drawBitmap(targetpositionanim, mUtils.convertDpToPixel((float) 338.13, getContext()), mUtils.convertDpToPixel((float) 1011.67 + mGameThread.targetPosition, getContext()), targetPaint);
 
-        tuneypaint.setColor(WHITE);
-        possition -= 6;
-        canvas.drawCircle(mUtils.convertDpToPixel(360, getContext()), mUtils.convertDpToPixel((float) 1030.67 + possition, getContext()), mUtils.convertDpToPixel((float) 25.67, getContext()), tuneypaint);
-        canvas.drawBitmap(tuney, mUtils.convertDpToPixel(343, getContext()), mUtils.convertDpToPixel((float) 1008.67 + possition, getContext()), null);
-        if (possition == mGameThread.targetposition) {
-            if (istuneycliked) {
+        tuneyPaint.setColor(WHITE);
+        position -= 6;
+        canvas.drawCircle(mUtils.convertDpToPixel(360, getContext()), mUtils.convertDpToPixel((float) 1030.67 + position, getContext()), mUtils.convertDpToPixel((float) 25.67, getContext()), tuneyPaint);
+        canvas.drawBitmap(tuney, mUtils.convertDpToPixel(343, getContext()), mUtils.convertDpToPixel((float) 1008.67 + position, getContext()), null);
+        if (position == mGameThread.targetPosition) {
+            if (isTuneyClicked) {
                 canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
-                canvas.drawBitmap(tuneycliked, mUtils.convertDpToPixel((float) 326.67, getContext()), mUtils.convertDpToPixel((float) 1004.33 + mGameThread.targetposition, getContext()), null);
+                canvas.drawBitmap(tuneyClicked, mUtils.convertDpToPixel((float) 326.67, getContext()), mUtils.convertDpToPixel((float) 1004.33 + mGameThread.targetPosition, getContext()), null);
             }
             else {
                 canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
-                canvas.drawBitmap(tuneydead, mUtils.convertDpToPixel((float) 326.67, getContext()), mUtils.convertDpToPixel((float) 1004.33 + mGameThread.targetposition, getContext()), null);
+                canvas.drawBitmap(tuneyDead, mUtils.convertDpToPixel((float) 326.67, getContext()), mUtils.convertDpToPixel((float) 1004.33 + mGameThread.targetPosition, getContext()), null);
             }
         }
     }
@@ -134,10 +134,10 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
             Log.i(TAG, "touch input: X:" + mUtils.convertPixelToDp(event.getX(), getContext()) + "  " + "Y:" + mUtils.convertPixelToDp(event.getY(), getContext()));
 
             // Check if click is within bounds of circle
-            if ((event.getX() >= mUtils.convertDpToPixel(331, getContext()) && event.getX() <= mUtils.convertDpToPixel(355, getContext())) && (event.getY() >= mUtils.convertDpToPixel(1018 + mGameThread.targetposition, getContext()) && event.getY() <= mUtils.convertDpToPixel(1100 + mGameThread.targetposition, getContext()))) {
+            if ((event.getX() >= mUtils.convertDpToPixel(331, getContext()) && event.getX() <= mUtils.convertDpToPixel(355, getContext())) && (event.getY() >= mUtils.convertDpToPixel(1018 + mGameThread.targetPosition, getContext()) && event.getY() <= mUtils.convertDpToPixel(1100 + mGameThread.targetPosition, getContext()))) {
                 // Clicked within circle, register further clicks by consuming this click
                 Log.i(TAG, "touch success");
-                istuneycliked = true;
+                isTuneyClicked = true;
 
                 return true;
             }

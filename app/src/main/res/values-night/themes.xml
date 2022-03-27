@@ -1,6 +1,4 @@
 <resources>
-    <!-- Base application theme. -->
-    <style name="Theme.MusicworldRecreation" parent="@android:style/Theme.DeviceDefault.NoActionBar">
-
+    <style name="Theme.MusicworldRecreation" parent="@android:style/Theme.DeviceDefault.NoActionBar.Fullscreen">
     </style>
 </resources>
