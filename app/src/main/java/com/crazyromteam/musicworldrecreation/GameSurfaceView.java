@@ -31,6 +31,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
     public int animState = 1;
     int targetPositionAnimFrame;
     public boolean isTuneyClicked = false;
+    public boolean isClicked = false;
 
     public GameSurfaceView(Context context) {
         super(context);
@@ -53,9 +54,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
         mUtils = new Utils();
         setZOrderOnTop(true);
         getHolder().setFormat(PixelFormat.TRANSLUCENT);
-        }
-
-
+    }
     public void TryDraw(SurfaceHolder holder) {
         Canvas mCanvas = holder.lockCanvas();
         holder.addCallback(this);
@@ -100,12 +99,18 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
         position -= 6;
         canvas.drawCircle(mUtils.convertDpToPixel(360, getContext()), mUtils.convertDpToPixel((float) 1030.67 + position, getContext()), mUtils.convertDpToPixel((float) 25.67, getContext()), tuneyPaint);
         canvas.drawBitmap(tuney, mUtils.convertDpToPixel(343, getContext()), mUtils.convertDpToPixel((float) 1008.67 + position, getContext()), null);
+        if (position != mGameThread.targetPosition && isClicked) {
+            canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+            canvas.drawBitmap(tuneyDead, mUtils.convertDpToPixel((float) 326.67, getContext()), mUtils.convertDpToPixel((float) 1004.33 + mGameThread.targetPosition, getContext()), null);
+            mGameThread.run();
+            isClicked = false;
+        }
         if (position == mGameThread.targetPosition) {
             if (isTuneyClicked) {
                 canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
                 canvas.drawBitmap(tuneyClicked, mUtils.convertDpToPixel((float) 326.67, getContext()), mUtils.convertDpToPixel((float) 1004.33 + mGameThread.targetPosition, getContext()), null);
-            }
-            else {
+                isTuneyClicked = false;
+            } else {
                 canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
                 canvas.drawBitmap(tuneyDead, mUtils.convertDpToPixel((float) 326.67, getContext()), mUtils.convertDpToPixel((float) 1004.33 + mGameThread.targetPosition, getContext()), null);
             }
@@ -132,13 +137,15 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             Log.i(TAG, "touch input: X:" + mUtils.convertPixelToDp(event.getX(), getContext()) + "  " + "Y:" + mUtils.convertPixelToDp(event.getY(), getContext()));
+            isClicked = true;
 
             // Check if click is within bounds of circle
             if ((event.getX() >= mUtils.convertDpToPixel(331, getContext()) && event.getX() <= mUtils.convertDpToPixel(355, getContext())) && (event.getY() >= mUtils.convertDpToPixel(1018 + mGameThread.targetPosition, getContext()) && event.getY() <= mUtils.convertDpToPixel(1100 + mGameThread.targetPosition, getContext()))) {
                 // Clicked within circle, register further clicks by consuming this click
                 Log.i(TAG, "touch success");
-                isTuneyClicked = true;
-
+                if (position == mGameThread.targetPosition) {
+                    isTuneyClicked = true;
+                }
                 return true;
             }
         }
