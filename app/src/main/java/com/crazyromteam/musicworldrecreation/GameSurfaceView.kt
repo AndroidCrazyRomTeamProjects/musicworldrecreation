@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.MotionEvent
 import android.view.SurfaceHolder
 import android.view.SurfaceView
+import com.crazyromteam.musicworldrecreation.anim.Animations
 
 class GameSurfaceView : SurfaceView, SurfaceHolder.Callback {
     private var mGameThread: GameThread? = null
@@ -15,9 +16,10 @@ class GameSurfaceView : SurfaceView, SurfaceHolder.Callback {
     var targetPaint = Paint()
     var tuney = BitmapFactory.decodeResource(resources, R.drawable.tuney_basic)
     val tuneyDead = BitmapFactory.decodeResource(resources, R.drawable.tuney_dead_anim_1)
-    var tuneyClicked = BitmapFactory.decodeResource(resources, R.drawable.tuney_tap_anim_1)
     var targetAnimState = 1
     var targetPositionAnimFrame = 0
+    var tuneyClickedAnimState = 1
+    var tuneyClickedAnimFrame = 0
     var mUtils: Utils? = null
     var mAnimations: Animations? = null
 
@@ -60,7 +62,7 @@ class GameSurfaceView : SurfaceView, SurfaceHolder.Callback {
 
     fun drawTuney(canvas: Canvas) {
         super.draw(canvas)
-        val targetPositionAnim = BitmapFactory.decodeResource(resources, mAnimations!!.TargetPosition(this))
+        val targetPositionAnim = BitmapFactory.decodeResource(resources, mAnimations!!.targetPosition(this))
         canvas.drawBitmap(targetPositionAnim, mUtils!!.convertDpToPixel(338.13.toFloat(), context), mUtils!!.convertDpToPixel(1011.67.toFloat() + mGameThread!!.targetPosition, context), targetPaint)
         tuneyPaint.color = Color.WHITE
         position -= 6f
@@ -73,6 +75,7 @@ class GameSurfaceView : SurfaceView, SurfaceHolder.Callback {
         if (position == mGameThread!!.targetPosition) {
             if (isTuneyClicked) {
                 canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR)
+                var tuneyClicked = BitmapFactory.decodeResource(resources, mAnimations!!.tuneyTapBlue(this))
                 canvas.drawBitmap(tuneyClicked, mUtils!!.convertDpToPixel(326.67.toFloat(), context), mUtils!!.convertDpToPixel(1004.33.toFloat() + mGameThread!!.targetPosition, context), null)
             } else {
                 canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR)
