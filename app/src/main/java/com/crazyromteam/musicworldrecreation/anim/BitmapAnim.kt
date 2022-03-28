@@ -3,7 +3,7 @@ package com.crazyromteam.musicworldrecreation.anim
 import com.crazyromteam.musicworldrecreation.GameSurfaceView
 import com.crazyromteam.musicworldrecreation.R
 
-class Animations {
+class BitmapAnim {
     fun targetPosition(mGameSurfaceView: GameSurfaceView) : Int {
         when (mGameSurfaceView.targetAnimState) {
             1 -> mGameSurfaceView.targetPositionAnimFrame = R.drawable.target_position_anim_1
