@@ -3,7 +3,6 @@ package com.crazyromteam.musicworldrecreation
 import java.lang.Exception
 
 class GameThread(val mGameSurfaceView: GameSurfaceView) : Thread() {
-    val mGameActivity = GameActivity()
     private val TAG = "GameThread"
     var targetPosition = -497f
     override fun run() {
@@ -15,10 +14,10 @@ class GameThread(val mGameSurfaceView: GameSurfaceView) : Thread() {
         var sleepTime: Long
         while (mGameSurfaceView.position != targetPosition && !mGameSurfaceView.isClicked) {
             mGameSurfaceView.TryDraw(mGameSurfaceView.holder)
-            if (mGameActivity.targetAnimState == 8) {
-                mGameActivity.targetAnimState = 0
+            if (mGameSurfaceView.targetAnimState == 8) {
+                mGameSurfaceView.targetAnimState = 0
             }
-            mGameActivity.targetAnimState++
+            mGameSurfaceView.targetAnimState++
             deltaTime = System.nanoTime() - startTime
             sleepTime = (FRAME_TIME - deltaTime) / 1000000L
             if (sleepTime > 0) {

@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.View
 
 class GameActivity : Activity() {
-    var targetAnimState = 1
     var gamesound = null as MediaPlayer?
     var mTitleActivity = null as TitleActivity?
     override fun onCreate(savedInstanceState: Bundle?) {

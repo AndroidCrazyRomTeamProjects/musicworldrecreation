@@ -13,11 +13,11 @@ class GameSurfaceView : SurfaceView, SurfaceHolder.Callback {
     private val TAG = "GameSurfaceView"
     var tuneyPaint = Paint()
     var targetPaint = Paint()
-    var tuneyDeadPaint = Paint()
     var tuney = BitmapFactory.decodeResource(resources, R.drawable.tuney_basic)
-    val tuneyDead_anim_1 = BitmapFactory.decodeResource(resources, R.drawable.tuney_dead_anim_1)
-    val tuneyDead_anim_2 = BitmapFactory.decodeResource(resources, R.drawable.tuney_dead_anim_2)
+    val tuneyDead = BitmapFactory.decodeResource(resources, R.drawable.tuney_dead_anim_1)
     var tuneyClicked = BitmapFactory.decodeResource(resources, R.drawable.tuney_tap_anim_1)
+    var targetAnimState = 1
+    var targetPositionAnimFrame = 0
     var mUtils: Utils? = null
     var mAnimations: Animations? = null
 
@@ -60,15 +60,15 @@ class GameSurfaceView : SurfaceView, SurfaceHolder.Callback {
 
     fun drawTuney(canvas: Canvas) {
         super.draw(canvas)
-        val targetpositionanim = BitmapFactory.decodeResource(resources, mAnimations!!.TargetPosition())
-        canvas.drawBitmap(targetpositionanim, mUtils!!.convertDpToPixel(338.13.toFloat(), context), mUtils!!.convertDpToPixel(1011.67.toFloat() + mGameThread!!.targetPosition, context), targetPaint)
+        val targetPositionAnim = BitmapFactory.decodeResource(resources, mAnimations!!.TargetPosition(this))
+        canvas.drawBitmap(targetPositionAnim, mUtils!!.convertDpToPixel(338.13.toFloat(), context), mUtils!!.convertDpToPixel(1011.67.toFloat() + mGameThread!!.targetPosition, context), targetPaint)
         tuneyPaint.color = Color.WHITE
         position -= 6f
         canvas.drawCircle(mUtils!!.convertDpToPixel(360f, context), mUtils!!.convertDpToPixel(1030.67.toFloat() + position, context), mUtils!!.convertDpToPixel(25.67.toFloat(), context), tuneyPaint)
         canvas.drawBitmap(tuney, mUtils!!.convertDpToPixel(343f, context), mUtils!!.convertDpToPixel(1008.67.toFloat() + position, context),null)
         if (position != mGameThread!!.targetPosition && isClicked) {
             canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR)
-            canvas.drawBitmap(tuneyDead_anim_1, mUtils!!.convertDpToPixel(326.67.toFloat(), context), mUtils!!.convertDpToPixel(1004.33.toFloat() + position, context), null)
+            canvas.drawBitmap(tuneyDead, mUtils!!.convertDpToPixel(326.67.toFloat(), context), mUtils!!.convertDpToPixel(1004.33.toFloat() + position, context), null)
         }
         if (position == mGameThread!!.targetPosition) {
             if (isTuneyClicked) {
@@ -76,7 +76,7 @@ class GameSurfaceView : SurfaceView, SurfaceHolder.Callback {
                 canvas.drawBitmap(tuneyClicked, mUtils!!.convertDpToPixel(326.67.toFloat(), context), mUtils!!.convertDpToPixel(1004.33.toFloat() + mGameThread!!.targetPosition, context), null)
             } else {
                 canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR)
-                canvas.drawBitmap(tuneyDead_anim_1, mUtils!!.convertDpToPixel(326.67.toFloat(), context), mUtils!!.convertDpToPixel(1004.33.toFloat() + mGameThread!!.targetPosition, context), tuneyDeadPaint)
+                canvas.drawBitmap(tuneyDead, mUtils!!.convertDpToPixel(326.67.toFloat(), context), mUtils!!.convertDpToPixel(1004.33.toFloat() + mGameThread!!.targetPosition, context), null)
             }
         }
     }
