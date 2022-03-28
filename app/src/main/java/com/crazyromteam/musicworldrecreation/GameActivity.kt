@@ -6,11 +6,13 @@ import android.os.Bundle
 import android.view.View
 
 class GameActivity : Activity() {
+    var targetAnimState = 1
     var gamesound = null as MediaPlayer?
     var mTitleActivity = null as TitleActivity?
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
+        mTitleActivity = TitleActivity()
         window.decorView.apply {
             systemUiVisibility =
                 View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_FULLSCREEN
