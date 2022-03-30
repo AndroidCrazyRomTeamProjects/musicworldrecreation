@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.drawable.AnimationDrawable
 import android.media.MediaPlayer
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.animation.AlphaAnimation
@@ -22,8 +23,13 @@ class TitleActivity : Activity() {
         titlesound = MediaPlayer.create(this.applicationContext, R.raw.title_screen)
         titlesound?.start()
         window.decorView.apply {
-            systemUiVisibility =
-                View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_FULLSCREEN
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                systemUiVisibility =
+                    View.SYSTEM_UI_FLAG_FULLSCREEN
+            } else {
+                systemUiVisibility =
+                    View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+            }
             val titletext = findViewById<View>(R.id.textstart) as TextView
 
             val anim: Animation = AlphaAnimation(0.0f, 1.0f)
