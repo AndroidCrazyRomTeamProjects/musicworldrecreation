@@ -4,6 +4,9 @@ import com.crazyromteam.musicworldrecreation.GameSurfaceView
 import com.crazyromteam.musicworldrecreation.R
 
 class BitmapAnim {
+    val maxTargetPositionFrame = 8
+    val maxTuneyTspBlueFrame = 5
+
     fun targetPosition(mGameSurfaceView: GameSurfaceView) : Int {
         when (mGameSurfaceView.targetAnimState) {
             1 -> mGameSurfaceView.targetPositionAnimFrame = R.drawable.target_position_anim_1
@@ -17,14 +20,14 @@ class BitmapAnim {
         }
         return mGameSurfaceView.targetPositionAnimFrame
     }
-    fun tuneyTapBlue(mGameSurfaceView: GameSurfaceView) : Int {
-        when (mGameSurfaceView.tuneyClickedAnimState) {
-            1 -> mGameSurfaceView.tuneyClickedAnimFrame = R.drawable.tuney_tap_blue_anim_1
-            2 -> mGameSurfaceView.tuneyClickedAnimFrame = R.drawable.tuney_tap_blue_anim_2
-            3 -> mGameSurfaceView.tuneyClickedAnimFrame = R.drawable.tuney_tap_blue_anim_3
-            4 -> mGameSurfaceView.tuneyClickedAnimFrame = R.drawable.tuney_tap_blue_anim_4
-            5 -> mGameSurfaceView.tuneyClickedAnimFrame = R.drawable.tuney_tap_blue_anim_5
+    fun tuneyTapBlue(mGameSurfaceView: GameSurfaceView, Frame: Int) : Int {
+        when (Frame) {
+            1 -> mGameSurfaceView.tuneyTapBlueAnimFrame = R.drawable.tuney_tap_blue_anim_1
+            2 -> mGameSurfaceView.tuneyTapBlueAnimFrame = R.drawable.tuney_tap_blue_anim_2
+            3 -> mGameSurfaceView.tuneyTapBlueAnimFrame = R.drawable.tuney_tap_blue_anim_3
+            4 -> mGameSurfaceView.tuneyTapBlueAnimFrame = R.drawable.tuney_tap_blue_anim_4
+            5 -> mGameSurfaceView.tuneyTapBlueAnimFrame = R.drawable.tuney_tap_blue_anim_5
         }
-        return mGameSurfaceView.tuneyClickedAnimFrame
+        return mGameSurfaceView.tuneyTapBlueAnimFrame
     }
 }

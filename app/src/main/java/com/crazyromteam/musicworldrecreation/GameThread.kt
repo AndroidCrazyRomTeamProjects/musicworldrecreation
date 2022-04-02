@@ -1,19 +1,19 @@
 package com.crazyromteam.musicworldrecreation
 
+import com.crazyromteam.musicworldrecreation.anim.BitmapAnim
 import com.crazyromteam.musicworldrecreation.anim.FPSAnim.Companion.FRAME_TIME
 import com.crazyromteam.musicworldrecreation.anim.FPSAnim.Companion.deltaTime
 import com.crazyromteam.musicworldrecreation.anim.FPSAnim.Companion.sleepTime
 import com.crazyromteam.musicworldrecreation.anim.FPSAnim.Companion.startTime
-import java.lang.Exception
 
 class GameThread(val mGameSurfaceView: GameSurfaceView) : Thread() {
+    var mBitmpAnim = BitmapAnim()
     private val TAG = "GameThread"
     var targetPosition = -497f
     override fun run() {
-        super.run()
-        while (mGameSurfaceView.position != targetPosition && !mGameSurfaceView.isClicked) {
+        while ((mGameSurfaceView.position != targetPosition) && (!mGameSurfaceView.isClicked)) {
             mGameSurfaceView.TryDraw(mGameSurfaceView.holder)
-            if (mGameSurfaceView.targetAnimState == 8) {
+            if (mGameSurfaceView.targetAnimState == mBitmpAnim.maxTargetPositionFrame) {
                 mGameSurfaceView.targetAnimState = 0
             }
             mGameSurfaceView.targetAnimState++

@@ -6,6 +6,7 @@ import android.graphics.drawable.AnimationDrawable
 import android.media.MediaPlayer
 import android.os.Build
 import android.os.Bundle
+import android.view.MotionEvent
 import android.view.View
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
@@ -22,30 +23,28 @@ class TitleActivity : Activity() {
         animatedBackroundImage.start()
         titlesound = MediaPlayer.create(this.applicationContext, R.raw.title_screen)
         titlesound?.start()
-        window.decorView.apply {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                systemUiVisibility =
-                    View.SYSTEM_UI_FLAG_FULLSCREEN
-            } else {
-                systemUiVisibility =
-                    View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-            }
-            val titletext = findViewById<View>(R.id.textstart) as TextView
 
-            val anim: Animation = AlphaAnimation(0.0f, 1.0f)
-            anim.duration = 600 //You can manage the blinking time with this parameter
+        SystemUi().hideSystemUI(window)
+        val titletext = findViewById<View>(R.id.textstart) as TextView
 
-            anim.startOffset = 20
-            anim.repeatMode = Animation.REVERSE
-            anim.repeatCount = Animation.INFINITE
-            titletext.startAnimation(anim)
-        }
+        val anim: Animation = AlphaAnimation(0.0f, 1.0f)
+        anim.duration = 600 //You can manage the blinking time with this parameter
 
+        anim.startOffset = 20
+        anim.repeatMode = Animation.REVERSE
+        anim.repeatCount = Animation.INFINITE
+        titletext.startAnimation(anim)
     }
 
-    fun TitleClicked(view: View) {
-        titlesound?.stop()
-        val gameactivity = Intent(this, GameActivity::class.java)
-        startActivity(gameactivity)
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+        if (event.action == MotionEvent.ACTION_DOWN) {
+            if ((event.action != MotionEvent.ACTION_MOVE)) {
+                titlesound?.stop()
+                val gameActivity = Intent(this, GameActivity::class.java)
+                startActivity(gameActivity)
+                return true
+            }
+        }
+        return super.onTouchEvent(event)
     }
 }
