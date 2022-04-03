@@ -22,4 +22,8 @@ class GameActivity : Activity() {
         startActivity(titleactivity)
         finish()
     }
+
+    override fun onUserLeaveHint() {
+        gamesound?.stop()
+    }
 }

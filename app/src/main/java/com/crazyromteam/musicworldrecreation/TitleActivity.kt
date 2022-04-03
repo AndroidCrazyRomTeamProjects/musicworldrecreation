@@ -43,12 +43,16 @@ class TitleActivity : Activity() {
             .setCancelable(false)
             .setPositiveButton(
                 resources.getString(R.string.yes)
-            ) { dialog, id -> this@TitleActivity.finish() }
+            ) { dialog, id -> this@TitleActivity.finish(); titlesound?.stop() }
             .setNegativeButton(
                 resources.getString(R.string.no)
             ) { dialog, id -> dialog.cancel() }
         val alert = builder.create()
         alert.show()
+    }
+
+    override fun onUserLeaveHint() {
+        titlesound?.stop()
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
