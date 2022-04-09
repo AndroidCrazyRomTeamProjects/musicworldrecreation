@@ -6,14 +6,14 @@ import com.crazyromteam.musicworldrecreation.anim.FPSAnim.Companion.deltaTime
 import com.crazyromteam.musicworldrecreation.anim.FPSAnim.Companion.sleepTime
 import com.crazyromteam.musicworldrecreation.anim.FPSAnim.Companion.startTime
 
-class GameThread(val mGameSurfaceView: GameSurfaceView) : Thread() {
-    var mBitmpAnim = BitmapAnim()
+class GameThread(private val mGameSurfaceView: GameSurfaceView) : Thread() {
+    private var mBitmapAnim = BitmapAnim()
     private val TAG = "GameThread"
     var targetPosition = -497f
     override fun run() {
         while ((mGameSurfaceView.position != targetPosition) && (!mGameSurfaceView.isClicked)) {
-            mGameSurfaceView.TryDraw(mGameSurfaceView.holder)
-            if (mGameSurfaceView.targetAnimState == mBitmpAnim.maxTargetPositionFrame) {
+            mGameSurfaceView.tryDraw(mGameSurfaceView.holder)
+            if (mGameSurfaceView.targetAnimState == mBitmapAnim.maxTargetPositionFrame) {
                 mGameSurfaceView.targetAnimState = 0
             }
             mGameSurfaceView.targetAnimState++

@@ -15,17 +15,17 @@ import kotlinx.android.synthetic.main.activity_title.*
 
 
 class TitleActivity : Activity() {
-    var titlesound = null as MediaPlayer?
+    private var titleSound = null as MediaPlayer?
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_title)
-        val animatedBackroundImage = (title_view.background as AnimationDrawable)
-        animatedBackroundImage.start()
-        titlesound = MediaPlayer.create(this.applicationContext, R.raw.title_screen)
-        titlesound?.start()
+        val animatedBackgroundImage = (title_view.background as AnimationDrawable)
+        animatedBackgroundImage.start()
+        titleSound = MediaPlayer.create(this.applicationContext, R.raw.title_screen)
+        titleSound?.start()
 
         SystemUi().hideSystemUI(window)
-        val titletext = findViewById<View>(R.id.textstart) as TextView
+        val titleText = findViewById<View>(R.id.textstart) as TextView
 
         val anim: Animation = AlphaAnimation(0.0f, 1.0f)
         anim.duration = 600 //You can manage the blinking time with this parameter
@@ -33,7 +33,7 @@ class TitleActivity : Activity() {
         anim.startOffset = 20
         anim.repeatMode = Animation.REVERSE
         anim.repeatCount = Animation.INFINITE
-        titletext.startAnimation(anim)
+        titleText.startAnimation(anim)
     }
 
     override fun onBackPressed() {
@@ -43,7 +43,7 @@ class TitleActivity : Activity() {
             .setCancelable(false)
             .setPositiveButton(
                 resources.getString(R.string.yes)
-            ) { dialog, id -> this@TitleActivity.finish(); titlesound?.stop() }
+            ) { dialog, id -> this@TitleActivity.finish(); titleSound?.stop() }
             .setNegativeButton(
                 resources.getString(R.string.no)
             ) { dialog, id -> dialog.cancel() }
@@ -52,13 +52,13 @@ class TitleActivity : Activity() {
     }
 
     override fun onUserLeaveHint() {
-        titlesound?.stop()
+        titleSound?.stop()
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
         if (event.action == MotionEvent.ACTION_DOWN) {
             if ((event.action != MotionEvent.ACTION_MOVE)) {
-                titlesound?.stop()
+                titleSound?.stop()
                 val gameActivity = Intent(this, GameActivity::class.java)
                 startActivity(gameActivity)
                 finish()

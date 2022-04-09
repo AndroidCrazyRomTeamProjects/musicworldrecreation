@@ -6,24 +6,24 @@ import android.media.MediaPlayer
 import android.os.Bundle
 
 class GameActivity : Activity() {
-    var gamesound = null as MediaPlayer?
+    private var gameSound = null as MediaPlayer?
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
         SystemUi().hideSystemUI(window)
-        gamesound = MediaPlayer.create(this.applicationContext, R.raw.morning_dew)
-        gamesound?.start()
+        gameSound = MediaPlayer.create(this.applicationContext, R.raw.morning_dew)
+        gameSound?.start()
     }
 
     override fun onBackPressed() {
         super.onBackPressed()
-        gamesound?.stop()
-        val titleactivity = Intent(this, TitleActivity::class.java)
-        startActivity(titleactivity)
+        gameSound?.stop()
+        val titleActivity = Intent(this, TitleActivity::class.java)
+        startActivity(titleActivity)
         finish()
     }
 
     override fun onUserLeaveHint() {
-        gamesound?.stop()
+        gameSound?.stop()
     }
 }

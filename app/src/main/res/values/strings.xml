@@ -2,7 +2,7 @@
     <string name="app_name">music world recreation</string>
     <string name="touch_to_play">Touch to play</string>
     <string name="exit_music_world">Exit Music World</string>
-    <string name="exit_music_world_confirmation">Are you sure you want to exit</string>
+    <string name="exit_music_world_confirmation">Are you sure you want to exit?</string>
     <string name="yes">yes</string>
     <string name="no">no</string>
 </resources>
