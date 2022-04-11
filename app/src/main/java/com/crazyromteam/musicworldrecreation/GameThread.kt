@@ -16,7 +16,11 @@ class GameThread(private val mGameSurfaceView: GameSurfaceView) : Thread() {
             if (mGameSurfaceView.targetAnimState == mBitmapAnim.maxTargetPositionFrame) {
                 mGameSurfaceView.targetAnimState = 0
             }
+            if (mGameSurfaceView.tuneyAnimState == mBitmapAnim.maxTuneyFrame) {
+                mGameSurfaceView.tuneyAnimState = 0
+            }
             mGameSurfaceView.targetAnimState++
+            mGameSurfaceView.tuneyAnimState++
             deltaTime = System.nanoTime() - startTime
             sleepTime = (FRAME_TIME - deltaTime) / 1000000L
             if (sleepTime > 0) {

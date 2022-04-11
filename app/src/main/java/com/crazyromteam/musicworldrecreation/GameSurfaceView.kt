@@ -9,18 +9,21 @@ import android.view.SurfaceHolder
 import android.view.SurfaceView
 import com.crazyromteam.musicworldrecreation.anim.BitmapAnim
 
+
 class GameSurfaceView : SurfaceView, SurfaceHolder.Callback {
     private var mGameThread: GameThread? = null
     private val TAG = "GameSurfaceView"
     private var tuneyPaint = Paint()
-    private var tuney = BitmapFactory.decodeResource(resources, R.drawable.tuney_basic)
     private val tuneyDead = BitmapFactory.decodeResource(resources, R.drawable.tuney_dead_anim_1)
     private val pauseButtonSmall = BitmapFactory.decodeResource(resources, R.drawable.pause_button_small)
     private val pauseButtonHoldSmall = BitmapFactory.decodeResource(resources, R.drawable.pause_button_hold_small)
     private val circleButton = BitmapFactory.decodeResource(resources, R.drawable.circle_button)
+    private val waitingTuney = BitmapFactory.decodeResource(resources, R.drawable.waiting_tuney)
     var targetAnimState = 1
+    var tuneyAnimState = 1
     var targetPositionAnimFrame = 0
     var tuneyTapBlueAnimFrame = 0
+    var tuneyAnimFrame = 0
     private var mUtils: Utils? = null
     private var mBitmapAnim: BitmapAnim? = null
 
@@ -63,16 +66,27 @@ class GameSurfaceView : SurfaceView, SurfaceHolder.Callback {
 
     private fun drawTuney(canvas: Canvas) {
         super.draw(canvas)
+        var tuney = BitmapFactory.decodeResource(resources, mBitmapAnim!!.tuney(this))
+        for (x in 3..408 step 13) {
+            for (y in 855 downTo 820 step 13) {
+                canvas.drawBitmap(
+                    waitingTuney,
+                    mUtils!!.convertDpToPixel(x.toFloat(), context),
+                    mUtils!!.convertDpToPixel(y.toFloat(), context),
+                    null
+                )
+            }
+        }
         canvas.drawBitmap(
             circleButton,
-            mUtils!!.convertDpToPixel(356f, context),
-            mUtils!!.convertDpToPixel(800f, context),
+            mUtils!!.convertDpToPixel(377f, context),
+            mUtils!!.convertDpToPixel(839f, context),
             null
         )
         canvas.drawBitmap(
             pauseButtonSmall,
-            mUtils!!.convertDpToPixel(363f, context),
-            mUtils!!.convertDpToPixel(808f, context),
+            mUtils!!.convertDpToPixel(383f, context),
+            mUtils!!.convertDpToPixel(846f, context),
             null
         )
         val targetPositionAnim = BitmapFactory.decodeResource(resources, mBitmapAnim!!.targetPosition(this))
@@ -106,15 +120,32 @@ class GameSurfaceView : SurfaceView, SurfaceHolder.Callback {
             )
         }
         if (position == mGameThread!!.targetPosition) {
+            tuney = BitmapFactory.decodeResource(resources, R.drawable.tuney_basic_finish)
+            canvas.drawBitmap(
+                targetPositionAnim,
+                mUtils!!.convertDpToPixel(338.13.toFloat(), context),
+                mUtils!!.convertDpToPixel(
+                    1011.67.toFloat() + mGameThread!!.targetPosition,
+                    context
+                ),
+                null
+            )
+
             if (isTuneyClicked) {
                 for (Frame in 1..mBitmapAnim!!.maxTuneyTspBlueFrame) {
                     holder.setFormat(PixelFormat.TRANSLUCENT)
                     val tuneyClicked =
-                        BitmapFactory.decodeResource(resources, mBitmapAnim!!.tuneyTapBlue(this, Frame))
+                        BitmapFactory.decodeResource(
+                            resources,
+                            mBitmapAnim!!.tuneyTapBlue(this, Frame)
+                        )
                     canvas.drawBitmap(
                         tuneyClicked,
                         mUtils!!.convertDpToPixel(326.67.toFloat(), context),
-                        mUtils!!.convertDpToPixel(1004.33.toFloat() + mGameThread!!.targetPosition, context),
+                        mUtils!!.convertDpToPixel(
+                            1004.33.toFloat() + mGameThread!!.targetPosition,
+                            context
+                        ),
                         null
                     )
                 }
