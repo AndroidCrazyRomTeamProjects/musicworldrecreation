@@ -24,6 +24,7 @@ class GameSurfaceView : SurfaceView, SurfaceHolder.Callback {
     var targetPositionAnimFrame = 0
     var tuneyTapBlueAnimFrame = 0
     var tuneyAnimFrame = 0
+    var x = 0
     private var mUtils: Utils? = null
     private var mBitmapAnim: BitmapAnim? = null
 
@@ -89,28 +90,32 @@ class GameSurfaceView : SurfaceView, SurfaceHolder.Callback {
             mUtils!!.convertDpToPixel(846f, context),
             null
         )
-        val targetPositionAnim = BitmapFactory.decodeResource(resources, mBitmapAnim!!.targetPosition(this))
+        val targetPositionAnim =
+            BitmapFactory.decodeResource(resources, mBitmapAnim!!.targetPosition(this))
         canvas.drawBitmap(
             targetPositionAnim,
-            mUtils!!.convertDpToPixel(338.13.toFloat(), context),
-            mUtils!!.convertDpToPixel(1011.67.toFloat() + mGameThread!!.targetPosition, context),
+            mUtils!!.convertDpToPixel(mGameThread!!.targetX[x], context),
+            mUtils!!.convertDpToPixel(
+                mGameThread!!.targetY[x] + mGameThread!!.targetPosition[x],
+                context
+            ),
             null
         )
         tuneyPaint.color = Color.WHITE
         position -= 6f
         canvas.drawCircle(
-            mUtils!!.convertDpToPixel(360f, context),
-            mUtils!!.convertDpToPixel(1030.67.toFloat() + position, context),
+            mUtils!!.convertDpToPixel(mGameThread!!.circleX[x], context),
+            mUtils!!.convertDpToPixel(mGameThread!!.circleY[x] + position, context),
             mUtils!!.convertDpToPixel(25.67.toFloat(), context),
             tuneyPaint
         )
         canvas.drawBitmap(
             tuney,
-            mUtils!!.convertDpToPixel(343f, context),
-            mUtils!!.convertDpToPixel(1008.67.toFloat() + position, context),
+            mUtils!!.convertDpToPixel(mGameThread!!.tuneyX[x], context),
+            mUtils!!.convertDpToPixel(mGameThread!!.tuneyY[x] + position, context),
             null
         )
-        if (position != mGameThread!!.targetPosition && isClicked) {
+        if (position != mGameThread!!.targetPosition[x] && isClicked) {
             canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR)
             canvas.drawBitmap(
                 tuneyDead,
@@ -118,19 +123,19 @@ class GameSurfaceView : SurfaceView, SurfaceHolder.Callback {
                 mUtils!!.convertDpToPixel(1004.33.toFloat() + position, context),
                 null
             )
+            position = 1f
         }
-        if (position == mGameThread!!.targetPosition) {
+        if (position == mGameThread!!.targetPosition[x]) {
             tuney = BitmapFactory.decodeResource(resources, R.drawable.tuney_basic_finish)
             canvas.drawBitmap(
                 targetPositionAnim,
                 mUtils!!.convertDpToPixel(338.13.toFloat(), context),
                 mUtils!!.convertDpToPixel(
-                    1011.67.toFloat() + mGameThread!!.targetPosition,
+                    1011.67.toFloat() + mGameThread!!.targetPosition[x],
                     context
                 ),
                 null
             )
-
             if (isTuneyClicked) {
                 for (Frame in 1..mBitmapAnim!!.maxTuneyTspBlueFrame) {
                     holder.setFormat(PixelFormat.TRANSLUCENT)
@@ -143,21 +148,29 @@ class GameSurfaceView : SurfaceView, SurfaceHolder.Callback {
                         tuneyClicked,
                         mUtils!!.convertDpToPixel(326.67.toFloat(), context),
                         mUtils!!.convertDpToPixel(
-                            1004.33.toFloat() + mGameThread!!.targetPosition,
+                            1004.33.toFloat() + mGameThread!!.targetPosition[x],
                             context
                         ),
                         null
                     )
                 }
-            }
-            else {
+            } else {
                 canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR)
                 canvas.drawBitmap(
                     tuneyDead,
                     mUtils!!.convertDpToPixel(326.67.toFloat(), context),
-                    mUtils!!.convertDpToPixel(1004.33.toFloat() + mGameThread!!.targetPosition, context),
+                    mUtils!!.convertDpToPixel(
+                        1004.33.toFloat() + mGameThread!!.targetPosition[x],
+                        context
+                    ),
                     null
                 )
+            }
+            if (x == 1) {
+                mGameThread!!.isruning = false
+            } else {
+                x++
+                position = 1f
             }
         }
     }
@@ -171,15 +184,34 @@ class GameSurfaceView : SurfaceView, SurfaceHolder.Callback {
     override fun surfaceDestroyed(holder: SurfaceHolder) {}
     override fun onTouchEvent(event: MotionEvent): Boolean {
         if (event.action == MotionEvent.ACTION_DOWN) {
-            Log.i(TAG, "touch input: X:" + mUtils!!.convertPixelToDp(event.x, context) + "  " + "Y:" + mUtils!!.convertPixelToDp(event.y, context))
+            Log.i(
+                TAG,
+                "touch input: X:" + mUtils!!.convertPixelToDp(
+                    event.x,
+                    context
+                ) + "  " + "Y:" + mUtils!!.convertPixelToDp(event.y, context)
+            )
             isClicked = true
 
             // Check if click is within bounds of circle
-            if (event.x >= mUtils!!.convertDpToPixel(331f, context) && event.x <= mUtils!!.convertDpToPixel(355f, context) && event.y >= mUtils!!.convertDpToPixel((1018 + mGameThread!!.targetPosition), context) && event.y <= mUtils!!.convertDpToPixel((1100 + mGameThread!!.targetPosition), context))
-            {
+            if (event.x >= mUtils!!.convertDpToPixel(
+                    331f,
+                    context
+                ) && event.x <= mUtils!!.convertDpToPixel(
+                    355f,
+                    context
+                ) && event.y >= mUtils!!.convertDpToPixel(
+                    (1018 + mGameThread!!.targetPosition[x]),
+                    context
+                ) && event.y <= mUtils!!.convertDpToPixel(
+                    (1100 + mGameThread!!.targetPosition[x]),
+                    context
+                )
+
+            ) {
                 // Clicked within circle, register further clicks by consuming this click
                 Log.i(TAG, "touch success")
-                if (position == mGameThread!!.targetPosition) {
+                if (position == mGameThread!!.targetPosition[x]) {
                     isTuneyClicked = true
                 }
                 return true

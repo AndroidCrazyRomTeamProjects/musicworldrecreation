@@ -13,7 +13,6 @@ import android.view.animation.Animation
 import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_title.*
 
-
 class TitleActivity : Activity() {
     private var titleSound = null as MediaPlayer?
     public override fun onCreate(savedInstanceState: Bundle?) {
