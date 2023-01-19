@@ -14,17 +14,20 @@ class GameSurfaceView : SurfaceView, SurfaceHolder.Callback {
     private var mGameThread: GameThread? = null
     private val TAG = "GameSurfaceView"
     private var tuneyPaint = Paint()
+    // Initializing bitmap variables
     private val tuneyDead = BitmapFactory.decodeResource(resources, R.drawable.tuney_dead_anim_1)
     private val pauseButtonSmall = BitmapFactory.decodeResource(resources, R.drawable.pause_button_small)
     private val pauseButtonHoldSmall = BitmapFactory.decodeResource(resources, R.drawable.pause_button_hold_small)
     private val circleButton = BitmapFactory.decodeResource(resources, R.drawable.circle_button)
     private val waitingTuney = BitmapFactory.decodeResource(resources, R.drawable.waiting_tuney)
+    // Initializing animations frames variables
     var targetAnimState = 1
     var tuneyAnimState = 1
     var targetPositionAnimFrame = 0
     var tuneyTapBlueAnimFrame = 0
     var tuneyAnimFrame = 0
     var x = 0
+
     private var mUtils: Utils? = null
     private var mBitmapAnim: BitmapAnim? = null
 
@@ -67,6 +70,7 @@ class GameSurfaceView : SurfaceView, SurfaceHolder.Callback {
     private fun drawTuney(canvas: Canvas) {
         super.draw(canvas)
         var tuney = BitmapFactory.decodeResource(resources, mBitmapAnim!!.tuney(this))
+        // Drawing bottom tuneys bitmap
         for (x in 3..408 step 13) {
             for (y in 855 downTo 820 step 13) {
                 canvas.drawBitmap(
@@ -77,6 +81,7 @@ class GameSurfaceView : SurfaceView, SurfaceHolder.Callback {
                 )
             }
         }
+        // Drawing pause button on bottom with circle inside
         canvas.drawBitmap(
             circleButton,
             mUtils!!.convertDpToPixel(377f, context),
@@ -89,6 +94,7 @@ class GameSurfaceView : SurfaceView, SurfaceHolder.Callback {
             mUtils!!.convertDpToPixel(846f, context),
             null
         )
+        // Drawing target animation
         val targetPositionAnim =
             BitmapFactory.decodeResource(resources, mBitmapAnim!!.targetPosition(this))
         canvas.drawBitmap(
@@ -100,6 +106,7 @@ class GameSurfaceView : SurfaceView, SurfaceHolder.Callback {
             ),
             null
         )
+        // Drawing tuney in circle with tuney move animation
         tuneyPaint.color = Color.WHITE
         position -= 6f
         canvas.drawCircle(
@@ -114,6 +121,7 @@ class GameSurfaceView : SurfaceView, SurfaceHolder.Callback {
             mUtils!!.convertDpToPixel(mGameThread!!.tuneyY[x] + position, context),
             null
         )
+        // If tuney clicked early then die
         if (position != mGameThread!!.targetPosition[x] && isClicked) {
             canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR)
             canvas.drawBitmap(
@@ -135,6 +143,7 @@ class GameSurfaceView : SurfaceView, SurfaceHolder.Callback {
                 ),
                 null
             )
+            // when tuney is clicked in target draw blue success animation
             if (isTuneyClicked) {
                 for (Frame in 1..mBitmapAnim!!.maxTuneyTspBlueFrame) {
                     holder.setFormat(PixelFormat.TRANSLUCENT)
@@ -153,6 +162,7 @@ class GameSurfaceView : SurfaceView, SurfaceHolder.Callback {
                         null
                     )
                 }
+                // If tuney is not clicked then die
             } else {
                 canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR)
                 canvas.drawBitmap(

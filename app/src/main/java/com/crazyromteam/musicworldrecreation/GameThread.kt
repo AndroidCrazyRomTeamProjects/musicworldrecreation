@@ -10,6 +10,7 @@ class GameThread(private val mGameSurfaceView: GameSurfaceView) : Thread() {
     private var mBitmapAnim = BitmapAnim()
     private val TAG = "GameThread"
     var isruning = true
+    // Array of Tuneys and Target Positions
     val targetX: FloatArray = floatArrayOf(338.13f, 290.13f)
     val targetY: FloatArray = floatArrayOf(1011.67f, 963.67f)
     val targetPosition: FloatArray = floatArrayOf(-497f, -425f)
