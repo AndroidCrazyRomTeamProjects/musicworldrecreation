@@ -46,7 +46,6 @@ class GameSurfaceView : SurfaceView, SurfaceHolder.Callback {
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
         init()
     }
-
     private fun init() {
         holder.addCallback(this)
         mGameThread = GameThread(this)
