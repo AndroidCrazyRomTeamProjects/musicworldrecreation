@@ -26,7 +26,7 @@ class GameSurfaceView : SurfaceView, SurfaceHolder.Callback {
     var targetPositionAnimFrame = 0
     var tuneyTapBlueAnimFrame = 0
     var tuneyAnimFrame = 0
-    var rediusAnimState = 0
+    var rediusAnimState = 0f
     var x = 0
 
     private var mUtils: Utils? = null
@@ -113,7 +113,7 @@ class GameSurfaceView : SurfaceView, SurfaceHolder.Callback {
         canvas.drawCircle(
             mUtils!!.convertDpToPixel(mGameThread!!.circleX[x], context),
             mUtils!!.convertDpToPixel(mGameThread!!.circleY[x] + position, context),
-            mUtils!!.convertDpToPixel(25.67.toFloat() + rediusAnimState, context),
+            mUtils!!.convertDpToPixel(50.67.toFloat() + rediusAnimState, context),
             tuneyPaint
         )
         canvas.drawBitmap(
@@ -134,6 +134,7 @@ class GameSurfaceView : SurfaceView, SurfaceHolder.Callback {
             position = 1f
         }
         if (position == mGameThread!!.targetPosition[x]) {
+            rediusAnimState = 0f
             tuney = BitmapFactory.decodeResource(resources, R.drawable.tuney_basic_finish)
             canvas.drawBitmap(
                 targetPositionAnim,
