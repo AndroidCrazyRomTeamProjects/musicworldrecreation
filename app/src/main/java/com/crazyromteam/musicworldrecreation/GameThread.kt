@@ -29,7 +29,8 @@ class GameThread(private val mGameSurfaceView: GameSurfaceView) : Thread() {
             }
             mGameSurfaceView.targetAnimState++
             mGameSurfaceView.tuneyAnimState++
-            mGameSurfaceView.rediusAnimState = mGameSurfaceView.rediusAnimState -0.30f
+            mGameSurfaceView.rediusAnimState = mGameSurfaceView.rediusAnimState - 0.60f
+            mGameSurfaceView.stroke = mGameSurfaceView.stroke + 0.60f
 
             deltaTime = System.nanoTime() - startTime
             sleepTime = (FRAME_TIME - deltaTime) / 1000000L

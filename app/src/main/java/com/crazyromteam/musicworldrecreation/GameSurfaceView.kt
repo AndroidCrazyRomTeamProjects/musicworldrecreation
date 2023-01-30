@@ -27,6 +27,7 @@ class GameSurfaceView : SurfaceView, SurfaceHolder.Callback {
     var tuneyTapBlueAnimFrame = 0
     var tuneyAnimFrame = 0
     var rediusAnimState = 0f
+    var stroke = 10f
     var x = 0
 
     private var mUtils: Utils? = null
@@ -108,12 +109,15 @@ class GameSurfaceView : SurfaceView, SurfaceHolder.Callback {
             null
         )
         // Drawing tuney in circle with tuney move animation
+
+        tuneyPaint.style = Paint.Style.STROKE
         tuneyPaint.color = Color.WHITE
+        tuneyPaint.strokeWidth = stroke
         position -= 6f
         canvas.drawCircle(
             mUtils!!.convertDpToPixel(mGameThread!!.circleX[x], context),
             mUtils!!.convertDpToPixel(mGameThread!!.circleY[x] + position, context),
-            mUtils!!.convertDpToPixel(50.67.toFloat() + rediusAnimState, context),
+            mUtils!!.convertDpToPixel(60.97.toFloat() + rediusAnimState, context),
             tuneyPaint
         )
         canvas.drawBitmap(
@@ -135,6 +139,7 @@ class GameSurfaceView : SurfaceView, SurfaceHolder.Callback {
         }
         if (position == mGameThread!!.targetPosition[x]) {
             rediusAnimState = 0f
+            stroke = 5f
             tuney = BitmapFactory.decodeResource(resources, R.drawable.tuney_basic_finish)
             canvas.drawBitmap(
                 targetPositionAnim,
