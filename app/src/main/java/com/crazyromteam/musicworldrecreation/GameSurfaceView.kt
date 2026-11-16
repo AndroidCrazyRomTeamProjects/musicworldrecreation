@@ -13,6 +13,7 @@ import com.crazyromteam.musicworldrecreation.anim.BitmapAnim
 class GameSurfaceView : SurfaceView, SurfaceHolder.Callback {
     private var mGameThread: GameThread? = null
     private val TAG = "GameSurfaceView"
+    private var scorePaint = Paint()
     private var tuneyPaint = Paint()
     // Initializing bitmap variables
     private val tuneyDead = BitmapFactory.decodeResource(resources, R.drawable.tuney_dead_anim_1)
@@ -29,6 +30,9 @@ class GameSurfaceView : SurfaceView, SurfaceHolder.Callback {
     var rediusAnimState = 0f
     var stroke = 10f
     var x = 0
+    var score = 100
+    var combo = 0
+    var fevermode = false
 
     private var mUtils: Utils? = null
     private var mBitmapAnim: BitmapAnim? = null
@@ -69,8 +73,19 @@ class GameSurfaceView : SurfaceView, SurfaceHolder.Callback {
         }
     }
 
+    private fun drawScore(canvas: Canvas) {
+        super.draw(canvas)
+        scorePaint.color = Color.WHITE
+        scorePaint.textSize = mUtils!!.convertDpToPixel(20f, context)
+        scorePaint.textAlign = Paint.Align.CENTER
+        scorePaint.isAntiAlias = true
+        val scoreText = score.toString()
+        canvas.drawText(scoreText, canvas.width / 2f, mUtils!!.convertDpToPixel(50f, context), scorePaint)
+    }
+
     private fun drawTuney(canvas: Canvas) {
         super.draw(canvas)
+        drawScore(canvas)
         var tuney = BitmapFactory.decodeResource(resources, mBitmapAnim!!.tuney(this))
         // Drawing bottom tuneys bitmap
         for (x in 3..408 step 13) {
@@ -136,6 +151,8 @@ class GameSurfaceView : SurfaceView, SurfaceHolder.Callback {
                 null
             )
             position = 1f
+            fevermode = false
+            combo = 0
         }
         if (position == mGameThread!!.targetPosition[x]) {
             rediusAnimState = 0f
@@ -227,8 +244,13 @@ class GameSurfaceView : SurfaceView, SurfaceHolder.Callback {
             ) {
                 // Clicked within circle, register further clicks by consuming this click
                 Log.i(TAG, "touch success")
-                if (position == mGameThread!!.targetPosition[x]) {
+                if (Math.abs(position - mGameThread!!.targetPosition[x]) < 10.0f) {
                     isTuneyClicked = true
+                    score += 10
+                    combo++
+                    if (combo == 10) {
+                        fevermode = true
+                    }
                 }
                 return true
             }
